@@ -3,6 +3,7 @@ local args = {...}
 if table.getn(args) < 2 then
   error("Two arguments must be given: a vaild HTTP URL where the raw file is hosted, and an ending filename.", 1)
 else
+  print("Arguments are: " .. args[1] .. " and " .. args[2])
   local http_grabber = http.get(args[1]).readAll()
   if h then
     if not fs.exists(args[2]) then
