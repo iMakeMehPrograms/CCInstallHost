@@ -1,6 +1,6 @@
 local args = {...}
 
-if table.getn(args) < 2 then
+if table.getn(args) < 1 then
   error("Two arguments must be given: a vaild HTTP URL where the raw file is hosted, and an endpoint filename.", 1)
 else
   print("Arguments are: " .. args[1] .. " and " .. args[2])
@@ -8,7 +8,7 @@ else
     error("URL cannot be requested.", 1)
   end
   local http_grabber = http.get(args[1])
-  if h then
+  if http_grabber then
     if not fs.exists(args[2]) then
       f = fs.open(args[2], "w")
       f.write(http_grabber.readAll())
