@@ -1,14 +1,17 @@
 local args = {...}
 
 if table.getn(args) < 2 then
-  error("Two arguments must be given: a vaild HTTP URL where the raw file is hosted, and an ending filename.", 1)
+  error("Two arguments must be given: a vaild HTTP URL where the raw file is hosted, and an endpoint filename.", 1)
 else
   print("Arguments are: " .. args[1] .. " and " .. args[2])
-  local http_grabber = http.get(args[1]).readAll()
+  if http.checkURL() == false then
+    error("URL cannot be requested.", 1)
+  end
+  local http_grabber = http.get(args[1])
   if h then
     if not fs.exists(args[2]) then
       f = fs.open(args[2], "w")
-      f.write(http_grabber)
+      f.write(http_grabber.readAll())
       f.close()
       print("File " .. args[2] .. " was downloaded successfully.")
     else
@@ -16,7 +19,7 @@ else
       local event, char = os.pullEvent("char")
       if char == "y" then
         f = fs.open(args[2], "w+")
-        f.write(http_grabber)
+        f.write(http_grabber.readAll())
         f.close()
         print("File overrided.")
       else 
