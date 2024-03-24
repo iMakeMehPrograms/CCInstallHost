@@ -1,6 +1,6 @@
 local args = {...}
 
-if table.getn(args) < 1 then
+if table.getn(args) < 2 then
   error("Two arguments must be given: a vaild HTTP URL where the raw file is hosted, and an endpoint filename.", 1)
 else
   print("Arguments are: " .. args[1] .. " and " .. args[2])
