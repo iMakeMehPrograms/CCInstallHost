@@ -119,7 +119,7 @@ else
       table.insert(tokens, token);
     end
     if tokens[1] == "LIST" then
-      print("Available Servers: " .. #listServers())
+      print("Available Servers: " .. listServers())
     elseif tokens[1] == "CONNECT" then
       if table.getn(tokens) < 2 then
         print("Command needs a server argument.")
