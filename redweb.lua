@@ -1,5 +1,6 @@
 local modem
 local connection_id
+local content
 
 local function openHost(name)
   modem = peripheral.find("modem") or error("No modem found.", 1)
@@ -51,7 +52,7 @@ local function getServerContent(server_name)
     error("Server not found.", 0)
     return nil
   end
-  rednet.send(connection_id, "Send content pls!", "redweb")
+  rednet.send(connection_id, "CONTENT", "redweb")
   local id, message = rednet.recieve("redweb", 30)
   if not id then
     error("Server didn't reply.", 0)
@@ -59,3 +60,27 @@ local function getServerContent(server_name)
   end
   return message
 end
+
+local function processRequest(request)
+  if request == "CONTENT" then
+    return content
+end
+
+local function waitForRequest(time)
+  local id, message
+  if time then
+    id, message = rednet.recieve("redweb", time)
+  else 
+    id, message = rednet.recieve("redweb")
+  end
+  local reply = processRequest(message)
+  rednet.send(id, reply, "redweb")
+end
+
+
+
+
+
+
+
+
