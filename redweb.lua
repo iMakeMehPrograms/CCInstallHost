@@ -114,7 +114,7 @@ else
   local tokens
   local local_content
   while looping do
-    command = stdin:read()
+    command = read()
     tokens = string.gmatch(command, "%s")
     if tokens[1] == "LIST" then
       print("Available Servers: " .. #listServers())
