@@ -124,7 +124,7 @@ else
         local_content = getServerContent(tokens[2])
         print(local_content)
       end
-    elseif tokens[1] == "DOWNLOAD"
+    elseif tokens[1] == "DOWNLOAD" then
       if table.getn(tokens) < 3 then
         print("Command needs server and filename arguments.")
       else
@@ -137,7 +137,10 @@ else
           fs.close()
         end
       end
+    elseif tokens[1] == "QUIT" then
+      looping = false
     end 
+  end
 end
 
 
