@@ -66,6 +66,7 @@ end
 local function processRequest(request)
   if request == "CONTENT" then
     return content
+  end
 end
 
 local function waitForRequest(time)
