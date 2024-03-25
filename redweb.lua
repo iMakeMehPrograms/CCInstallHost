@@ -137,9 +137,9 @@ else
         if fs.exists(tokens[3]) then
           print("File already exists.")
         else
-          fs.open(tokens[3], "w")
+          local file = fs.open(tokens[3], "w")
           fs.write(local_content)
-          fs.close()
+          fs.close(file)
         end
       end
     elseif tokens[1] == "QUIT" then
