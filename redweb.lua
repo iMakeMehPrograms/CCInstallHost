@@ -20,7 +20,7 @@ local function closeHost()
   end
   
   rednet.unhost("redweb")
-  rednet.close(modem)
+  rednet.close(peripheral.getName(modem))
 end
 
 local function openClient()
@@ -37,7 +37,7 @@ local function closeClient()
     error("Rednet was not open in the first place!", 1)
   end
   
-  rednet.close(modem)
+  rednet.close(peripheral.getName(modem))
 end
 
 local function listServers()
@@ -115,7 +115,7 @@ else
   local local_content
   while looping do
     command = read()
-    for token in string.gmatch(command, "%s") do
+    for token in string.gmatch(command, "%a+") do
       table.insert(tokens, token);
     end
     if tokens[1] == "LIST" then
