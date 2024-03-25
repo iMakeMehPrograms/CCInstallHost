@@ -114,6 +114,8 @@ else
   local tokens = {}
   local local_content
   while looping do
+    command = ""
+    tokens = {}
     command = read()
     for token in string.gmatch(command, "%a+") do
       table.insert(tokens, token);
