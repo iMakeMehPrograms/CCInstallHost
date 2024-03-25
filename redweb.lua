@@ -1,3 +1,5 @@
+local args = {...}
+
 local modem
 local connection_id
 local content
@@ -73,14 +75,77 @@ local function waitForRequest(time)
   else 
     id, message = rednet.recieve("redweb")
   end
+  if not id then
+      return false
+  end
   local reply = processRequest(message)
   rednet.send(id, reply, "redweb")
+  return true
+end
+
+---------------------------------------------- Border from library functions and nonlibrary runtime ----------------------------------------------
+  
+if table.getn(args) < 1 then
+    error("You must define if the redweb run is a client or a host, i.e: CLIENT | HOST", 1)
+end
+
+if args[1] == "HOST" then
+  if table.getn(args) < 3 then
+    error("You must define two extra arguments when hosting: the file to host as CONTENT and the server name.", 1)
+  end
+  
+  if not fs.exists(args[2]) then
+    error("The CONTENT file doesn't exist!", 1)
+  end
+
+  content = fs.open(args[2], "r").readAll()
+  openHost(args[3])
+    
+  while true do
+    waitForRequest()
+  end
+    
+  closeHost()
+else 
+  openClient()
+  local looping = true
+  local command = ""
+  local tokens
+  local local_content
+  while looping do
+    command = stdin:read()
+    tokens = string.gmatch(command, "%s")
+    if tokens[1] == "LIST" then
+      print("Available Servers: " .. #listServers())
+    elseif tokens[1] == "CONNECT" then
+      if table.getn(tokens) < 2 then
+        print("Command needs a server argument.")
+      else
+        local_content = getServerContent(tokens[2])
+        print(local_content)
+      end
+    elseif tokens[1] == "DOWNLOAD"
+      if table.getn(tokens) < 3 then
+        print("Command needs server and filename arguments.")
+      else
+        local_content = getServerContent(tokens[2])
+        if fs.exists(tokens[3]) then
+          print("File already exists.")
+        else
+          fs.open(tokens[3], "w")
+          fs.write(local_content)
+          fs.close()
+        end
+      end
+    end 
 end
 
 
 
 
 
+      
 
 
+      
 
