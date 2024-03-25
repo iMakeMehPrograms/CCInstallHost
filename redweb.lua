@@ -55,7 +55,7 @@ local function getServerContent(server_name)
     return nil
   end
   rednet.send(connection_id, "CONTENT", "redweb")
-  local id, message = rednet.recieve("redweb", 30)
+  local id, message = rednet.receive("redweb", 30)
   if not id then
     error("Server didn't reply.", 0)
     return nil
@@ -72,9 +72,9 @@ end
 local function waitForRequest(time)
   local id, message
   if time then
-    id, message = rednet.recieve("redweb", time)
+    id, message = rednet.receive("redweb", time)
   else 
-    id, message = rednet.recieve("redweb")
+    id, message = rednet.receive("redweb")
   end
   if not id then
       return false
