@@ -7,7 +7,7 @@ local content
 local function openHost(name)
   modem = peripheral.find("modem") or error("No modem found.", 1)
   
-  rednet.open(modem)
+  rednet.open(peripheral.getName(modem))
   rednet.host("redweb", name)
   if not rednet.isOpen() then
     error("Rednet could not open!", 1)
@@ -26,7 +26,7 @@ end
 local function openClient()
   modem = peripheral.find("modem") or error("No modem found.", 1)
   
-  rednet.open(modem)
+  rednet.open(peripheral.getName(modem))
   if not rednet.isOpen() then
     error("Rednet could not open!", 1)
   end
