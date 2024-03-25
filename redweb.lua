@@ -111,11 +111,13 @@ else
   openClient()
   local looping = true
   local command = ""
-  local tokens
+  local tokens = {}
   local local_content
   while looping do
     command = read()
-    tokens = string.gmatch(command, "%s")
+    for token in string.gmatch(command, "%s") do
+      table.insert(tokens, token);
+    end
     if tokens[1] == "LIST" then
       print("Available Servers: " .. #listServers())
     elseif tokens[1] == "CONNECT" then
